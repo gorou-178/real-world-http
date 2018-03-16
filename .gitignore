@@ -11,3 +11,13 @@
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
 
+/bin/
+
+/pkg/
+
+# cetificate file
+/certificate/
+
+/src/github.com/
+/src/golang.org/
+/src/sourcegraph.com/

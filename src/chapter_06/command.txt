@@ -1,0 +1,36 @@
+# 秘密鍵の作成
+openssl genrsa -out ca.key 2048
+
+# 証明書署名要求を作成
+openssl req -new -sha256 -key ca.key -out ca.csr
+>Country Name (2 letter code) []:JP
+>State or Province Name (full name) []:Fukuoka
+>Locality Name (eg, city) []:Fukuoka
+>Organization Name (eg, company) []:example.com
+>Organizational Unit Name (eg, section) []:
+>Common Name (eg, fully qualified host name) []:example.com
+>Email Address []:hoge@example.com
+
+# 証明書を作成
+openssl x509 -in ca.csr -days 365 -req -signkey ca.key -sha256 -out ca.crt
+
+# 秘密鍵の確認
+openssl rsa -in ca.key -textxs ../
+
+# 証明書署名要求の確認
+openssl req -in ca.csr -text
+
+# 証明書の確認
+openssl x509 -in ca.crt -text
+
+# サーバ証明書用のキー作成
+openssl genrsa -out server.key 2048
+
+# クライアント証明書の秘密鍵作成
+openssl genrsa -out client.key 2048
+
+# クライアント証明書署名要求を作成
+openssl req -new -nodes -sha256 -key client.key -out client.csr
+
+# クライアント証明書を作成
+openssl x509 -req -days 365 -in client.csr -sha256 -out client.crt -CA ca.crt -CAkey ca.key -CAcreateserial -extensions Client
