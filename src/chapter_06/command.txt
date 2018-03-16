@@ -15,7 +15,7 @@ openssl req -new -sha256 -key ca.key -out ca.csr
 openssl x509 -in ca.csr -days 365 -req -signkey ca.key -sha256 -out ca.crt
 
 # 秘密鍵の確認
-openssl rsa -in ca.key -textxs ../
+openssl rsa -in ca.key -text
 
 # 証明書署名要求の確認
 openssl req -in ca.csr -text
